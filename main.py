@@ -13,7 +13,7 @@ isRunning = True
 GUESSED = "_ _ _ _ _ _ _"
 
 CHOOSEN_SUBJECT = "SUBJECT"
-
+Test = ""
 # function
 
 def load_images():
