@@ -1,0 +1,74 @@
+import math
+
+import pygame
+from pygame import gfxdraw
+WIDTH, HEIGHT = 960, 540
+FPS = 60
+
+
+pygame.init()
+win = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Hangman")
+
+# variable
+hangman_status = 3
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+
+# button variables
+BTN_RADIUS = 22
+BTN_GAP = 20
+BTN_LETTERS = []
+BTN_START_X = round((WIDTH - (BTN_RADIUS * 2 + BTN_GAP) * 13) / 2)
+BTN_START_Y = 425
+A_CODE = 65
+for i in range(26):
+    x = BTN_START_X + BTN_GAP * 2 + ((BTN_RADIUS * 2 + BTN_GAP) * (i % 13))
+    y = BTN_START_Y + ((i // 13) * (BTN_GAP + BTN_RADIUS * 2))
+
+    BTN_LETTERS.append([x, y, chr(A_CODE + i), True])
+# load images
+images = []
+for i in range(1, 9):
+    image = pygame.image.load(("assets/" + str(i) + ".JPG"))
+    image = pygame.transform.scale(image, (WIDTH, HEIGHT))
+    images.append(image)
+
+# game loop
+clock = pygame.time.Clock()
+isRunning = True
+
+
+def draw():
+    win.fill(WHITE)
+    win.blit(images[hangman_status], (0, 0))
+    # draw button
+    for letter in BTN_LETTERS:
+        posx, posy, ltr, visible = letter
+        if(visible):
+            pygame.gfxdraw.aacircle(win, posx, posy, BTN_RADIUS, BLACK)
+            pygame.gfxdraw.filled_circle(win, posx, posy, BTN_RADIUS, BLACK)
+            text = pygame.font.SysFont("Helvetica", 32).render(ltr, 1, WHITE)
+            win.blit(text, (posx - text.get_width()/2, posy - text.get_height()/2))
+    pygame.display.update()
+
+
+while isRunning:
+    clock.tick(FPS)
+    draw()
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            m_x, m_y = pygame.mouse.get_pos()
+            for letter in BTN_LETTERS:
+                x , y , ltr, visible = letter
+                if(visible):
+                    dis = math.sqrt((x - m_x) ** 2 + (y - m_y) ** 2)
+                    if dis < BTN_RADIUS:
+                        print((ltr))
+                        letter[3] = False
+
+
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            isRunning = False

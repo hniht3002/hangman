@@ -1,0 +1,21 @@
+WIDTH, HEIGHT = 960, 540
+FPS = 60
+FONT = "Helvetica"
+#button properties
+BTN_RADIUS = 22
+BTN_GAP = 20
+#color
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+
+HANGMAN_STATUS = 0
+
+SUBJECT = []
+#0: START MENU
+#1: CHOOSE SUBJECT
+#2: GAME START
+#3: GAME END
+GAME_STATUS = 2
+KEYWORD = "A N I M A L S"
+
