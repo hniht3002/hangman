@@ -10,12 +10,10 @@ pygame.display.set_caption("Hangman")
 # game loop
 clock = pygame.time.Clock()
 isRunning = True
-GUESSED = "_ _ _ _ _ _ _"
+GUESSED = "_ " * len(KEYWORD)
 
-CHOOSEN_SUBJECT = "SUBJECT"
-Test = ""
+
 # function
-
 def load_images():
     images = []
     for i in range(1, 9):
@@ -64,7 +62,7 @@ def updateGuessWord(character, s):
     if character in KEYWORD:
         pos = (findAllIndex(character, KEYWORD))
         for index in pos:
-            ltrList[index] = character
+            ltrList[index*2] = character
 
     return "".join(ltrList)
 
@@ -81,9 +79,12 @@ def showChooseSubject():
 
 
 def showMainGame():
+    # draw level
+    LEVEL_TEXT = pygame.font.SysFont(FONT, 32).render("Level: " + str(LEVEL), 1, WHITE)
+    display.blit(LEVEL_TEXT, (322 - LEVEL_TEXT.get_width()/2, 50))
     # draw subject
-    SJ = pygame.font.SysFont(FONT, 32).render(CHOOSEN_SUBJECT, 1, WHITE)
-    display.blit(SJ, (322 - SJ.get_width()/2, 50))
+    SJ = pygame.font.SysFont(FONT, 32).render(SUBJECT[SUBJECT_INDEX], 1, WHITE)
+    display.blit(SJ, (322 - SJ.get_width()/2, 100))
     # draw keyword
     GUESSED_WORD = pygame.font.SysFont(FONT, 32).render(GUESSED, 1, WHITE)
     display.blit(GUESSED_WORD, (322 - GUESSED_WORD.get_width()/2, 200))
