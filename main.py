@@ -78,8 +78,59 @@ def showStartScreen():
 
 
 def showChooseSubject():
-    # show choose subject screen
-    print()
+    global GAME_STATUS
+    global SUBJECT_INDEX
+    background_color = (0, 0, 0)
+
+    # Màu ô chữ
+    text_box_color = (255, 255, 255)
+
+    # Font và kích thước chữ
+    font = pygame.font.SysFont(FONT, 32)
+    
+
+    # Dữ liệu cho các cột và từ
+    column1_data = ["Word1", "Word2", "Word3", "Word4", "Word5"]
+    column2_data = ["Word6", "Word7", "Word8", "Word9", "Word10"]
+
+    # Vẽ background
+    display.blit(images[HANGMAN_STATUS], (0, 0))
+    # Vẽ nút "Back"
+    back = font.render("Back", True, (255, 255, 255))
+    display.blit(back, (WIDTH // 4 - back.get_width() // 2, 20))
+    
+
+    # Vẽ tiêu đề "Choose Topic"
+    title_text = font.render("Choose Topic", True, (255, 255, 255))
+    display.blit(title_text, (WIDTH // 1.95 - title_text.get_width() // 2, 65))
+
+    # Vẽ cột 1
+    column1_x = WIDTH // 6
+    column_y = 150
+    for index, word in enumerate(column1_data):
+        rect = pygame.Rect(column1_x, column_y, 250, 50)
+        pygame.draw.rect(display, text_box_color, rect)
+        text_surface = font.render(word, True, background_color)
+        display.blit(text_surface, (column1_x + 75 - text_surface.get_width() // 2, column_y + 25 - text_surface.get_height() // 2))
+        if rect.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0]:  # Kiểm tra xem có phải là lúc click chuột trái không
+                SUBJECT_INDEX = index
+                GAME_STATUS = 2
+        column_y +=60
+    # Vẽ cột 2
+    column2_x = WIDTH // 4 * 2.4
+    column_y = 150
+    for index, word in enumerate(column2_data):
+        rect = pygame.Rect(column2_x, column_y, 250, 50)
+        pygame.draw.rect(display, text_box_color, rect)  # Tăng chiều dài và thêm khoảng trống
+        text_surface = font.render(word, True, background_color)
+        display.blit(text_surface, (column2_x + 75 - text_surface.get_width() // 2, column_y + 25 - text_surface.get_height() // 2))
+        if rect.collidepoint(pygame.mouse.get_pos()):
+            if pygame.mouse.get_pressed()[0]:  # Kiểm tra xem có phải là lúc click chuột trái không
+                SUBJECT_INDEX = index + 5
+                GAME_STATUS =2
+        column_y +=60
+
 
 
 def showMainGame():
